@@ -1,0 +1,125 @@
+XSCF
+*****
+=> xscf command refer links:
+
+	http://newquickreference.weebly.com/xscf.html
+   https://www.thegeekdiary.com/most-commonly-used-xscf-commands-cheat-sheet/
+   
+   Clear the faulty events
+   fmadm clear UUID | location | class@resource
+   
+
+   XSCF> snapshot -LF -t XXXXX@170.186.170.63:/var/tmp -k download [Working One]
+   
+   XSCF> snapshot -LF -t XXXXXX@192.168.224.2:/var/tmp -k download  [take snapshot to locally]
+   XSCF> snapshot -L F -d usb0 [take a snaoshot on locally connected USB device]
+   
+   XSCF> shownetwork  -a[Display complete network configuration]
+   
+   XSCF> setnetwork xscf#0-lan#0 -m 255.255.255.0 192.168.1.10 [Set IP address for XSCF-LAN#0 in the XSCFU#0]
+   XSCF> applynetwork
+   XSCF> rebootxscf
+
+   XSCF> setntp 192.168.1.10 192.168.1.20[Setup 2 NTP servers with IP 192.168.1.10 and 192.168.1.20]
+   Please reset the XSCF by rebootxscf to reflect the ntp settings.
+   
+   XSCF> showuser -a  [Display user account information]
+   XSCF> poweroff -d 0 [Poweroff domain 0]
+   XSCF> poweron -d 0 [Poweron only domain 0]
+   XSCF> poweron -a [Poweron all domains]
+   XSCF> rebootxscf [Reboot XSCF]
+   
+   The 3 modes to reset a domain are :
+   por: To reset the domain
+   panic: To panic the domain
+   xir: To reset the CPU in domain
+   
+   XSCF> reset -d 0 por
+   XSCF> reset -d 0 panic
+   XSCF> reset -d 0 xir
+   
+   XSCF> sendbreak -d 0 [Send a break signal to a domain (with ID 0)]
+   
+   XSCF> showhardconf [Show field replaceable units(FRU)]
+   XSCF> showstatus [Display degraded units]
+   XSCF> showdevices [To display configured devices on XSBs]
+   XSCF> showdevices [To display configured devices on XSBs]
+   XSCF> fmdump -v [To view fault management logs]
+   XSCF> fmdump -e -V -u 5f88d7d5-a107-4435-99c9-7c59479d22ed TIME CLASS [Display Very Verbose Event Detail for a UUID]
+   
+   XSCF> showlogs -v
+   XSCF> showlogs error
+   XSCF> showlogs power
+   
+   XSCF> cfgdevice -l [Confirm that the device is attached to domain and is enabled :]
+   
+XSCF> setdomainmode -d 0 -m autoboot=on
+	XSCF> showdomainmode -d 0
+	Host-ID             : 85289956
+	Diagnostic Level    : min
+	Secure Mode         : on
+	Autoboot            : on
+	CPU Mode            : auto
+	
+TROUBLESHOOTING COMMAND:
+	-showhardconf        >>displays information about each FRU
+	-showlogs
+	-showstatus        >>Displays the information concerning the units failed or degraded
+	-fmdump            >>to display the contents of any log files associated with the Solaris fault manager
+	-fmadm faulty
+
+Command used for ADDING & REMOVING DOMAIN:
+	setdcl
+	setupfru
+	addboard
+	deleteboard
+	moveboard
+	
+Reboot XSCF
+
+	XSCF> rebootxscf
+
+	The 3 modes to reset a domain are :
+
+	por: To reset the domain
+	panic: To panic the domain
+	xir: To reset the CPU in domain
+
+	XSCF> reset -d 0 por
+	XSCF> reset -d 0 panic
+	XSCF> reset -d 0 xir
+
+Send a break signal to a domain (with ID 0)
+
+	XSCF> sendbreak -d 0
+
+   
+   XSCF>showdomainstatus -a
+   
+   
+dumpconfig/restoreconfig            >>save/restore XSCF configuration
+	XSCF> dumpconfig file:///media/usb_msd/backup-file.txt
+	XSCF> dumpconfig ftp://server/backup/backup-sca-ff2-16.txt
+	XSCF> restoreconfig file:///media/usb_msd/backup-file.txt
+	
+fmdump                        >view fault management logs
+	Exp.
+	XSCF> fmdump
+	Sep 29 15:09:25.4335 8cec9a83-e2a3-4dc3-a7cd-de01caef5c63 FMD-8000-4M
+	Sep 29 15:10:09.6151 5f88d7d5-a107-4435-99c9-7c59479d22ed FMD-8000-58
+
+	[Display Very Verbose Event Detail for the Last UUID:
+	XSCF> fmdump -e -V -u 5f88d7d5-a107-4435-99c9-7c5947 9d22ed
+
+	XSCF> fmdump  -m -M            >>Displaying Contents of the Fault Manager syslog Message
+   
+   #set the new date and time, Example for 24 Oct 2012 @ 10:23:
+
+   XSCF> setdate -u -s 102410232012.00
+   Wed Oct 24 10:23:00 UTC 2012
+T   he XSCF will be reset. Continue? [y|n] :y
+   
+   xscf flash update --> Sun SPARC(R) Enterprise M3000/M4000/M5000/M8000/M9000 (OPL): XCP FAQs (Doc ID 1393702.1)
+   
+   **************************************************************************
+   **************************************************************************
