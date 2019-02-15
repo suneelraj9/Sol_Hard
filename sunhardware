@@ -1,3 +1,81 @@
+Links
+*****
+ > Complete Hardware Reference : SPARC T5-2 / T5-4 / T5-8
+   https://www.thegeekdiary.com/complete-hardware-reference-sparc-t5-2-t5-4-t5-8/
+   
+ > Complete hardware reference : M3000 / M4000 / M5000 / M8000 / M9000
+   https://www.thegeekdiary.com/complete-hardware-reference-m3000-m4000-m5000-m8000-m9000/
+   
+ > Complete Hardware Reference : SPARC T7-1 / T7-2 / T7-4
+   https://www.thegeekdiary.com/complete-hardware-reference-sparc-t7-1-t7-2-t7-4/
+   
+   
+ Most Commonly used RSC commands (Cheat sheet)
+ *********************************************
+
+  > Connecting console and logging out
+    RSC> console
+    RSC> logout
+    
+  > If the console is busy fire either of the command from RSC and OS respectively 
+    RSC> resetrsc
+    # /usr/platform/`uname -i`/sbin/rscadm resetrsc
+    
+  > Poweron/Poweroff/Break/Reset Commands
+    RSC> poweron          --- Power on the server
+    RSC> poweroff         --- Power off the server
+    RSC> break            --- Sends break signal to OS
+    RSC>resetrsc          --- Resets RSC immediately
+    RSC>reset             --- resets server immediately
+    
+  > Errors/logs capturing commands
+    RSC> help
+    RSC> showenvironment
+    RSC> consolehistory
+    RSC> consolehistory boot  -- most recent POST and boot messages
+    RSC> consolehistory run  ---> most recent data received fro server OS
+    RSC> loghistory
+    RSC> show
+    RSC> showsc
+    
+> Most Commonly used ALOM commands (Cheat Sheet)
+************************************************
+	sc> help
+	Available commands
+	------------------
+	poweron [-c] {FRU}
+	poweroff [-y] [-f]
+	removefru [-y] {FRU}
+	reset [-y] [-x] [-c]
+	break [-y] [-c]
+	bootmode [normal|reset_nvram|diag|skip_diag|bootscript="string"]
+	console [-f]
+	consolehistory [-b lines|-e lines] [-g lines] [-v] [boot|run]
+	showlogs [-b lines|-e lines] [-g lines] [-v]
+	setlocator [on|off]
+	showlocator
+	showenvironment
+	showfru
+	showplatform [-v]
+	showsc [-v] [param]
+	shownetwork [-v]
+	setsc [param] [value]
+	setupsc
+	showdate
+	setdate [[mmdd]HHMM | mmddHHMM[cc]yy][.SS]
+	resetsc [-y]
+	flashupdate [-s IPaddr -f pathname] [-v]
+	setdefaults [-y] [-a]
+	useradd 
+	userdel [-y] 
+	usershow [username]
+	userpassword 
+	userperm  [c][u][a][r]
+	password
+	showusers [-g lines]
+	logout
+	help [command]
+
 XSCF
 *****
 => xscf command refer links:
@@ -120,6 +198,27 @@ fmdump                        >view fault management logs
 T   he XSCF will be reset. Continue? [y|n] :y
    
    xscf flash update --> Sun SPARC(R) Enterprise M3000/M4000/M5000/M8000/M9000 (OPL): XCP FAQs (Doc ID 1393702.1)
+   
+  >  How to update XCP firmware (XSCF firmware upgrade)
+        XSCF> version -c xcp
+	XSCF#0 (Standby)                    ---> XSCF#0 is Standby
+	XCP0 (Current): 1100                
+	XCP1 (Reserve): 1100                
+	XSCF#1 (Active)                     ---> XSCF#1 is Active
+	XCP0 (Reserve): 1100                
+	XCP1 (Current): 1100
+	
+  >   getflashimage, to import the new XCP firmware onto the main XSCF unit
+      XSCF> getflashimage -u root ftp://10.169.233.60/M9000_fw/DCXCP1116.tar.gz
+      
+  >   Verify the download of image :
+      XSCF> getflashimage -l
+      
+  >   To check if firmware can be updated with domains running, run:
+      XSCF> flashupdate -c check -m xcp -s 1116
+      
+  >   To actually update the firmware, run
+      XSCF> flashupdate -c update -m xcp -s 1116
    
    **************************************************************************
    **************************************************************************
